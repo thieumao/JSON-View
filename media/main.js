@@ -61,7 +61,6 @@
 			const isObject = !isArray && value !== null && typeof value === 'object';
 			const hasChildren = isArray ? value.length > 0 : isObject && Object.keys(value).length > 0;
 			const keyPart = key !== null ? '<span class="key">' + escapeHtml(key) + '</span>' : '';
-			const preview = hasChildren ? '<span class="preview ' + (isArray ? 'array' : 'object') + '"></span>' : '';
 
 			let childrenHtml = '';
 			if (isArray && hasChildren) {
@@ -70,12 +69,11 @@
 				childrenHtml = Object.keys(value).map((k) => node(k, value[k], depth + 1)).join('');
 			}
 
-			const startBracket = isArray ? '[' : '{';
-			const endBracket = isArray ? ']' : '}';
 			const collapsed = expandAll ? '' : ' collapsed';
 			const childrenCollapsed = expandAll ? '' : ' collapsed';
 
 			if (hasChildren) {
+				const iconText = isArray ? '[]' : '{}';
 				return (
 					'<li class="tree-node" data-depth="' +
 					depth +
@@ -84,19 +82,18 @@
 					'<span class="toggle' +
 					(expandAll ? '' : ' collapsed') +
 					'" role="button" tabindex="0" aria-label="Toggle"></span>' +
-					keyPart +
-					'<span class="bracket">' +
-					startBracket +
+					'<span class="node-icon ' +
+					(isArray ? 'array' : 'object') +
+					'">' +
+					iconText +
 					'</span>' +
-					preview +
+					keyPart +
 					'</div>' +
 					'<ul class="tree-children' +
 					childrenCollapsed +
 					'">' +
 					childrenHtml +
-					'<li class="tree-node-inner"><span class="toggle empty"></span><span class="bracket">' +
-					endBracket +
-					'</span></li></ul></li>'
+					'</ul></li>'
 				);
 			}
 
@@ -121,8 +118,7 @@
 		if (!isArray && !isObject) {
 			return '<ul class="tree-node"><li class="tree-node-inner">' + renderValue(data) + '</li></ul>';
 		}
-		const startBracket = isArray ? '[' : '{';
-		const endBracket = isArray ? ']' : '}';
+		const iconText = isArray ? '[]' : '{}';
 		const children = isArray
 			? data.map((v, i) => node(String(i), v, 0)).join('')
 			: Object.keys(data).map((k) => node(k, data[k], 0)).join('');
@@ -134,17 +130,16 @@
 			'<span class="toggle' +
 			(expandAll ? '' : ' collapsed') +
 			'" role="button" tabindex="0" aria-label="Toggle"></span>' +
-			'<span class="bracket">' +
-			startBracket +
+			'<span class="node-icon root">' +
+			iconText +
 			'</span>' +
+			'<span class="key">JSON</span>' +
 			'</div>' +
 			'<ul class="tree-children' +
 			rootCollapsed +
 			'">' +
 			children +
-			'<li class="tree-node-inner"><span class="toggle empty"></span><span class="bracket">' +
-			endBracket +
-			'</span></li></ul></li></ul>'
+			'</ul></li></ul>'
 		);
 	}
 

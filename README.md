@@ -29,6 +29,29 @@ yarn compile
 
 In VS Code: **Run > Start Debugging** (F5) to open the Extension Development Host and try the extension.
 
+## How to use this extension in VS Code
+
+### Option A: Run for testing (Extension Development Host)
+
+1. Open the **JsonView** project folder in VS Code (`File > Open Folder`).
+2. Press **F5** (or **Run > Start Debugging**).
+3. A new VS Code window opens with your extension loaded. In that window:
+   - Open any `.json` file.
+   - Right-click the tab → **Reopen Editor With...** → **JSON View** (or use the **Open with JSON View** button in the title bar).
+
+### Option B: Install from folder (use in your main VS Code)
+
+1. Build the extension: `yarn compile`.
+2. Press **Ctrl+Shift+P** → run **Extensions: Install from Location...** (or **Developer: Install Extension from Location...**).
+3. Choose the folder `d:\Projects\VSCode\JsonView`.
+4. VS Code installs the extension; reload the window if asked. You can then use **Reopen Editor With... > JSON View** on any JSON file.
+
+### Option C: Install from .vsix (share or reinstall later)
+
+1. Install the packager: `yarn global add @vscode/vsce` (or `npm install -g @vscode/vsce`).
+2. Build and package: `yarn compile` then `vsce package`.
+3. You get a file like `json-view-0.1.0.vsix`. In VS Code: **Extensions** view → **...** → **Install from VSIX...** → select that file.
+
 ## Requirements
 
 - VS Code 1.74 or later.
