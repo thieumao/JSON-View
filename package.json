@@ -1,0 +1,60 @@
+{
+  "name": "json-view",
+  "displayName": "JSON View",
+  "description": "View JSON files in a tree with expand/collapse for objects and arrays",
+  "version": "0.1.0",
+  "license": "MIT",
+  "publisher": "json-view",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "activationEvents": [
+    "onCustomEditor:jsonView.editor"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "jsonView.editor",
+        "displayName": "JSON View",
+        "selector": [
+          {
+            "filenamePattern": "*.json"
+          }
+        ],
+        "priority": "option"
+      }
+    ],
+    "commands": [
+      {
+        "command": "jsonView.openInJsonView",
+        "title": "Open with JSON View"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "jsonView.openInJsonView",
+          "when": "resourceExtname == .json",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^18.x",
+    "@types/vscode": "^1.74.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.0.0"
+  }
+}
